@@ -1,0 +1,50 @@
+File_location = '/Volumes/patientdetails/pt/volume1'
+dbutils.fs.head("/Volumes/patientdetails/pt/volume1/Patientdetails.json", 500)
+
+class Patients:
+    def __init__(self):
+        self.File_location = File_location
+
+    def get_schema(self):
+        return """ Name string, Patient_id string, Date_of_Birth date, Medical_history array<struct<condition string, medications array<struct<dosage string, name string>>>> """
+    
+    def read_patientdetails(self):
+        return (
+            spark.readStream
+            .format('json')
+            .schema(self.get_schema())
+            .load(f"{self.File_location}")
+        )
+    
+    def explode_patients(self, patient_df):
+        return (
+            patient_df.selectExpr(
+                "Name", "Patient_id", "Date_of_Birth", "explode(Medical_history) as Medical_history"
+            )
+        )
+
+    def flatten_patients(self, exploded_df):
+        from pyspark.sql.functions import expr
+        return (
+            exploded_df.withColumn("condition", expr("Medical_history.condition"))
+            .withColumn("medication_name", expr("Medical_history.medications.name"))
+            .withColumn("dosage", expr("Medical_history.medications.dosage"))
+            )
+        
+    def write_to_delta(self, df):
+        return (df.writeStream
+                .format("delta")
+                .outputMode("append")
+                .option("checkpointLocation", "/Volumes/patientdetails/pt/volume1/checkpoints")
+                .toTable("PatientDetails")
+            )
+
+
+pat = Patients()
+patient_df = pat.read_patientdetails()
+exploded_df = pat.explode_patients(patient_df)
+flattened_df = pat.flatten_patients(exploded_df)
+pat.write_to_delta(flattened_df)
+
+
+        
