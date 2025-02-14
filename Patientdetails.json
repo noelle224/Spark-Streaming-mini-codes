@@ -1,0 +1,67 @@
+[
+  {
+    "Name": "Alice Johnson",
+    "Patient_id": "P1001",
+    "Date_of_Birth": "1990-05-21",
+    "Medical_history": [
+      {
+        "condition": "Asthma",
+        "medications": [
+          {"dosage": "90mcg", "name": "Albuterol"}
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "Bob Smith",
+    "Patient_id": "P1002",
+    "Date_of_Birth": "1982-11-30",
+    "Medical_history": [
+      {
+        "condition": "Hypertension",
+        "medications": [
+          {"dosage": "5mg", "name": "Amlodipine"}
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "Charlie Davis",
+    "Patient_id": "P1003",
+    "Date_of_Birth": "1975-02-18",
+    "Medical_history": [
+      {
+        "condition": "Diabetes",
+        "medications": [
+          {"dosage": "500mg", "name": "Metformin"}
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "David White",
+    "Patient_id": "P1004",
+    "Date_of_Birth": "1993-07-12",
+    "Medical_history": [
+      {
+        "condition": "Migraine",
+        "medications": [
+          {"dosage": "50mg", "name": "Sumatriptan"}
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "Emma Brown",
+    "Patient_id": "P1005",
+    "Date_of_Birth": "1988-09-25",
+    "Medical_history": [
+      {
+        "condition": "High Cholesterol",
+        "medications": [
+          {"dosage": "10mg", "name": "Atorvastatin"}
+        ]
+      }
+    ]
+  }
+]
